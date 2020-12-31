@@ -128,8 +128,8 @@ function getparenthesisContent(string) { // sample input "(6+2(4-2))"
     }
     if (openCount === 0 && subString !== "") {
       // action case, we have the inner most parenthesis content sanitized before recursive call
-      string = string.split('')
-      string.splice(i+1)
+      string = string.split('');
+      string.splice(i+1);
       string = string.join('');
       // *** Perhaps I should just push the result to the stack and splice the string?
       // let subStrLength = subString.length;
@@ -143,20 +143,25 @@ function getparenthesisContent(string) { // sample input "(6+2(4-2))"
 
 }
 // 2+2+3
+/**
+ * I cannot seem to get this evaluate function to perform properly
+ */
 function evaluate(string){  // returns a number of a result between 2 numbers 1 operator
   if(!string) return "Invalid String"
   let operator = null, num = "", result = null, length = string.length;
   
   for(let i = 0; i < length; i++){
     let char = string[i];
+    console.log(char)
+    console.log("i", i, "char", char, "charIsOperator", isOperator(char), "length", length, "result", result, "operator", operator)
     if(isNumber(char)) num += char;
     else if(isOperator(char) && result === null) {
-      console.log("Line 154: num", num);
+      console.log("Line 154: num", num, "isCharOp", isOperator(char), char);
       result = Number(num);
       num = "";
       operator = char;
     }
-    else if(isOperator(char) && typeof result === "number"){ 
+    else if(isOperator(char) && result !== null){ 
       operator = char;
       console.log("Line 160: num", num, "result", result);
       result = resolve(result, num);
@@ -164,7 +169,7 @@ function evaluate(string){  // returns a number of a result between 2 numbers 1 
       console.log("Line 162: result", result)
       num = "";
     }
-    console.log("i", i, "char", char, "length", length, "result", result, "operator", operator)
+    
   }
   
   function resolve(num1, num2){
